@@ -18,12 +18,15 @@ async function retry(fn, ms) {
 
 function waitForPort(port) {
 	const child = spawnSync(`lsof -a -i tcp:${port} -c node`)
+
+	console.log('Port status = ', child)
 	if (child.status !== 0) throw 'Not Ready'
 }
 
 ;(async () => {
 	const results = []
 
+	console.log('Booting servr')
 	// start server
 	const child = spawn('bash', [
 		'-c',
