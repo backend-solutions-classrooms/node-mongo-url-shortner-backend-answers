@@ -1,7 +1,7 @@
 const fs = require('fs')
 const assert = require('assert')
 const fetch = require('node-fetch')
-const { spawn, execS, execSyncynexecSync } = require('child_process')
+const { spawn, execSync } = require('child_process')
 
 function delay(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms))
