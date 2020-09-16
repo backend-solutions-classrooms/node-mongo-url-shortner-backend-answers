@@ -25,12 +25,8 @@ function waitForPort(port) {
 ;(async () => {
 	const results = []
 
-	console.log('Booting servr')
 	// start server
-	const child = spawn('bash', [
-		'-c',
-		`cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`
-	])
+	spawn('bash', ['-c', `cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`])
 	// wait for app to attach port
 	await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
 
