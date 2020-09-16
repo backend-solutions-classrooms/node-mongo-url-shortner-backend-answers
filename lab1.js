@@ -22,14 +22,22 @@ function waitForPort(port) {
 }
 
 ;(async () => {
-	const results = [true]
+	const results = []
 
-	// // start server
-	// spawn('bash', ['-c', `cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`])
-	// // wait for app to attach port
-	// await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
+	// start server
+	spawn('bash', ['-c', `cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`])
+	// wait for app to attach port
+	await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
 
-	// // Tests
+	// Tests
+	try {
+		const data = await fetch(`http://localhost:${process.env.PUBLIC_PORT}/short`)
+		assert(data.status >= 200 && data.status < 300)
+		results.push(true)
+	} catch (error) {
+		results.push(false)
+	}
+
 	try {
 		const data = await fetch(`http://localhost:${process.env.PUBLIC_PORT}/short`).then((t) =>
 			t.text()
