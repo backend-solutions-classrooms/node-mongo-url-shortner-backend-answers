@@ -1,7 +1,7 @@
 const fs = require('fs')
 const assert = require('assert')
 const fetch = require('node-fetch')
-const { spawn, spawnSync } = require('child_process')
+const { spawn, execS, execSyncynexecSync } = require('child_process')
 
 function delay(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms))
@@ -17,10 +17,9 @@ async function retry(fn, ms) {
 }
 
 function waitForPort(port) {
-	const child = spawnSync(`lsof -a -i tcp:${port} -c node`)
-
-	console.log('Port status = ', child)
-	if (child.status !== 0) throw 'Not Ready'
+	execSync(`lsof -a -i tcp:${port} -c node`)
+	// if execSync doesn't throw, it was successful
+	return true
 }
 
 ;(async () => {
@@ -32,12 +31,6 @@ function waitForPort(port) {
 		'-c',
 		`cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`
 	])
-	child.stderr.on('data', (data) => {
-		console.log('stderr', data.toString())
-	})
-	child.stdout.on('data', (data) => {
-		console.log('stderr', data.toString())
-	})
 	// wait for app to attach port
 	await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
 
