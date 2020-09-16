@@ -30,15 +30,15 @@ function waitForPort(port) {
 	// await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
 
 	// // Tests
-	// try {
-	// 	const data = await fetch(`http://localhost:${process.env.PUBLIC_PORT}/short`).then((t) =>
-	// 		t.text()
-	// 	)
-	// 	assert(data.trim().toLowerCase() === 'hello from short')
-	// 	results.push(true)
-	// } catch (error) {
-	// 	results.push(false)
-	// }
+	try {
+		const data = await fetch(`http://localhost:${process.env.PUBLIC_PORT}/short`).then((t) =>
+			t.text()
+		)
+		assert(data.trim().toLowerCase() === 'hello from short')
+		results.push(true)
+	} catch (error) {
+		results.push(false)
+	}
 
 	fs.writeFileSync(process.env.UNIT_TEST_OUTPUT_FILE, JSON.stringify(results))
 	process.exit(0)
