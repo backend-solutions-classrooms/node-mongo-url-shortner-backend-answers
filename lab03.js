@@ -1,6 +1,6 @@
 const fs = require('fs')
 const assert = require('assert')
-const fetch = require('node-fetch')
+const path = require('path')
 const { spawn, execSync } = require('child_process')
 
 function delay(ms) {
@@ -26,6 +26,7 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 
 ;(async () => {
 	const results = []
+	console.log('here')
 
 	// start server
 	spawn('bash', ['-c', `cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`])
@@ -34,10 +35,11 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 
 	// Tests
 	try {
-		const txt = fs.readFileSync(path.resolve(process.env.USER_CODE_DIR, 'index.js'))
+		const txt = fs.readFileSync(path.resolve(process.env.USER_CODE_DIR, 'index.js'), 'utf8')
 		assert(txt.includes('mongoose.connect'))
 		results.push(true)
 	} catch (error) {
+		console.log(error)
 		results.push(false)
 	}
 
