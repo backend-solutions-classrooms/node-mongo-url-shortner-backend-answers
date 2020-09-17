@@ -42,7 +42,7 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	}
 
 	try {
-		const txt = execSync(`mongo --eval "printjson(db.getCollection('test').count())`)
+		const txt = execSync(`mongo --eval "printjson(db.getCollection('test').count())"`)
 		assert(txt.toString().trim() === '1')
 		results.push(true)
 	} catch (error) {
