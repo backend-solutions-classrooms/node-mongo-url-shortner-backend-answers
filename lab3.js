@@ -44,6 +44,8 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	}
 
 	try {
+		await fetch(`${HOST}/short`, { method: 'POST' })
+		await delay(10)
 		const txt = execSync(`mongo --eval "printjson(db.getCollection('test').count())"`)
 		assert(txt.toString().trim() === '1')
 		results.push(true)
