@@ -27,7 +27,6 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 
 ;(async () => {
 	const results = []
-	console.log('here')
 
 	// start server
 	spawn('bash', ['-c', `cd ${process.env.USER_CODE_DIR} && yarn install && yarn start`])
