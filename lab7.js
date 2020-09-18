@@ -35,7 +35,7 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 
 	try {
 		const res = await fetch(`${HOST}/sdjfhjdskfhjdsf`)
-		assert(res.statusCode === 404)
+		assert(res.status === 404)
 		results.push(true)
 	} catch (error) {
 		results.push(false)
