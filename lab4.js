@@ -45,10 +45,9 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	try {
 		await fetch(`${HOST}/short`, { method: 'POST' })
 		await delay(10)
-		const ObjectId = (str) => str
-		const record = eval(
+		const record = JSON.parse(
 			execSync(
-				`mongo localhost/codedamn --eval "db.getCollection('shorturls').findOne()" --quiet`
+				`mongo localhost/codedamn --eval "db.getCollection('shorturls').findOne({}, {_id:0})" --quiet`
 			)
 				.toString()
 				.trim()
@@ -58,6 +57,7 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 		assert(typeof record.clicks === 'number')
 		results.push(true)
 	} catch (error) {
+		console.log(error)
 		results.push(false)
 	}
 
