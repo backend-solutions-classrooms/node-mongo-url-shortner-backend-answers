@@ -34,7 +34,11 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	await retry(() => waitForPort(process.env.PUBLIC_PORT), 500)
 
 	try {
-		await fetch(`${HOST}/short`, { method: 'POST', body: 'fullUrl=google.com' })
+		await fetch(`${HOST}/short`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: 'fullUrl=google.com'
+		})
 		await delay(10)
 		const record = execSync(
 			`mongo localhost/codedamn --eval "db.getCollection('shorturls').count({full: 'google.com'})" --quiet`
