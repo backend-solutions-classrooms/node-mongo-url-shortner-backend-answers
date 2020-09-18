@@ -42,10 +42,9 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	}
 
 	try {
-		const res = await fetch(`${HOST}/5xr`)
+		const res = await fetch(`${HOST}/5xr`, { redirect: 'manual-dont-change' })
 		const location = res.headers.get('Location')
-		assert(res.redirected)
-		assert(location.includes('google.com'))
+		assert(location.toString().includes('google.com'))
 
 		results.push(true)
 	} catch (error) {
