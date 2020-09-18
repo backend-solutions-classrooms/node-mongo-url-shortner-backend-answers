@@ -45,7 +45,8 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	try {
 		await fetch(`${HOST}/short`, { method: 'POST' })
 		await delay(10)
-		const record = JSON.parse(
+		const ObjectId = (str) => str
+		const record = eval(
 			execSync(
 				`mongo localhost/codedamn --eval "db.getCollection('shorturls').findOne()" --quiet`
 			)
