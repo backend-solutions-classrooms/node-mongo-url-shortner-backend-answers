@@ -1,6 +1,7 @@
 const fs = require('fs')
 const assert = require('assert')
 const path = require('path')
+const fetch = require('node-fetch')
 const { spawn, execSync } = require('child_process')
 
 function delay(ms) {
@@ -46,8 +47,10 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 	try {
 		await fetch(`${HOST}/short`, { method: 'POST' })
 		await delay(10)
-		const txt = execSync(`mongo --eval "printjson(db.getCollection('test').count())"`)
-		assert(txt.toString().trim() === '1')
+		const txt = execSync(
+			`mongo localhost/codedamn --eval "printjson(db.getCollection('test').count())" --quiet`
+		)
+		assert(txt.toString().trim() == '1')
 		results.push(true)
 	} catch (error) {
 		results.push(false)
