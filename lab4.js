@@ -47,7 +47,7 @@ const HOST = 'http://localhost:' + process.env.PUBLIC_PORT
 		await delay(10)
 		const record = JSON.parse(
 			execSync(
-				`mongo localhost/codedamn --eval "printjson(db.getCollection('test').find())" --quiet`
+				`mongo localhost/codedamn --eval "db.getCollection('shorturls').findOne()" --quiet`
 			)
 				.toString()
 				.trim()
